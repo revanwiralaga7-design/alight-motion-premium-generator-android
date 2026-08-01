@@ -19,21 +19,22 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
-        with:
-          gradle-version: 8.7
-          cache-read-only: false
+      - name: Download Gradle Wrapper JAR
+        run: |
+          mkdir -p gradle/wrapper
+          curl -sL -o gradle/wrapper/gradle-wrapper.jar \
+            https://raw.githubusercontent.com/gradle/gradle/v8.7.0/gradle/wrapper/gradle-wrapper.jar
+          echo "Gradle wrapper jar downloaded"
 
       - name: Make gradlew executable
         run: chmod +x gradlew
 
       - name: Verify Gradle Wrapper
         run: |
-          echo "=== Checking Gradle Wrapper ==="
+          echo "=== Files ==="
           ls -la gradle/wrapper/
           echo ""
-          echo "=== Testing gradlew ==="
+          echo "=== Gradle Version ==="
           ./gradlew --version
 
       - name: Build Debug APK
