@@ -21,12 +21,15 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: 8.7
 
-      - name: Grant execute permission for gradlew
+      - name: Make gradlew executable
         run: chmod +x gradlew
 
       - name: Build Debug APK
-        run: ./gradlew assembleDebug --no-daemon
+        run: ./gradlew assembleDebug --stacktrace --info
+        continue-on-error: false
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
@@ -36,7 +39,7 @@ jobs:
 
       - name: Create Release
         if: github.ref == 'refs/heads/main'
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           tag_name: v1.0.0
           name: Alight Motion Premium Generator v1.0
@@ -47,7 +50,7 @@ jobs:
             - ✅ Kirim Magic Link
             - ✅ Verifikasi Akun
             - ✅ Hasil JSON lengkap (oobCode, idToken, dll)
-            - ✅ Material Design UI
+            - ✅ Modern Dark UI (Material 3)
             
             ### Cara Install
             1. Download `app-debug.apk`

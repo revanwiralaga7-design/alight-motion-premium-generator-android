@@ -1,168 +1,315 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp"
+    android:background="#0F172A"
     tools:context=".MainActivity">
 
-    <LinearLayout
+    <!-- Top App Bar -->
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="8dp">
+        android:background="#1E293B"
+        app:elevation="4dp">
 
-        <!-- Header -->
-        <TextView
+        <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="Alight Motion Premium Generator"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary" />
+            android:layout_height="?attr/actionBarSize"
+            app:title="Alight Motion Premium"
+            app:titleTextColor="#FFFFFF"
+            app:subtitle="RafaelXD Generator"
+            app:subtitleTextColor="#94A3B8" />
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="4dp"
-            android:text="RafaelXD • am.rafaelxd.my.id"
-            android:textSize="12sp"
-            android:textColor="#888888" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        android:fillViewport="true">
 
-        <!-- Email Input -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:hint="Email">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etEmail"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:hint="@string/email_hint" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Send Magic Link Button -->
-        <Button
-            android:id="@+id/btnSendLink"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="@string/send_magic_link"
-            android:backgroundTint="@color/primary"
-            app:cornerRadius="8dp" />
-
-        <!-- Instructions -->
-        <TextView
-            android:id="@+id/tvInstructions"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:background="#F5F5F5"
-            android:padding="12dp"
-            android:text="@string/instructions"
-            android:textSize="13sp"
-            android:textColor="#333333" />
-
-        <!-- Divider -->
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_marginTop="24dp"
-            android:background="#E0E0E0" />
-
-        <!-- Verify Section -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="Verifikasi Akun"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary" />
-
-        <!-- Raw Link Input -->
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:hint="Raw Link (dari email)">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etRawLink"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textUri"
-                android:hint="@string/paste_raw_link"
-                android:minLines="2" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <!-- Verify Button -->
-        <Button
-            android:id="@+id/btnVerify"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:text="@string/verify_account"
-            android:backgroundTint="@color/accent"
-            app:cornerRadius="8dp" />
-
-        <!-- Result Section -->
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text="@string/result"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            android:textColor="@color/primary" />
-
-        <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="240dp"
-            android:layout_marginTop="8dp"
-            android:background="#FAFAFA"
-            android:padding="8dp">
-
-            <TextView
-                android:id="@+id/tvResult"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="monospace"
-                android:text="Hasil akan muncul di sini..."
-                android:textColor="#222222"
-                android:textSize="12sp" />
-        </ScrollView>
-
-        <!-- Action Buttons -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="20dp">
 
-            <Button
-                android:id="@+id/btnCopyResult"
-                android:layout_width="0dp"
+            <!-- Hero Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_marginEnd="8dp"
-                android:text="Copy JSON"
-                android:backgroundTint="#424242" />
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                app:cardBackgroundColor="#1E293B"
+                android:layout_marginBottom="24dp">
 
-            <Button
-                android:id="@+id/btnClear"
-                android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="24dp"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="72dp"
+                        android:layout_height="72dp"
+                        android:src="@drawable/ic_alight_logo"
+                        android:layout_marginBottom="16dp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Generate Premium"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Alight Motion 1 Tahun"
+                        android:textSize="16sp"
+                        android:textColor="#38BDF8"
+                        android:layout_marginTop="4dp" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Email Section -->
+            <TextView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Clear"
-                android:backgroundTint="#757575" />
+                android:text="STEP 1: KIRIM MAGIC LINK"
+                android:textColor="#64748B"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#1E293B"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Email Address"
+                        app:boxBackgroundColor="#334155"
+                        app:boxStrokeColor="#38BDF8"
+                        app:hintTextColor="#94A3B8">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etEmail"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textEmailAddress"
+                            android:textColor="#FFFFFF"
+                            android:hint="your@email.com" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSendLink"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="16dp"
+                        android:text="KIRIM MAGIC LINK"
+                        android:textSize="15sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="12dp"
+                        app:backgroundTint="#0EA5E9"
+                        app:icon="@android:drawable/ic_menu_send"
+                        app:iconGravity="textStart" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Instructions Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#1E293B"
+                android:layout_marginBottom="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="📋 INSTRUKSI"
+                        android:textColor="#38BDF8"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1. Masukkan email\n2. Tekan Kirim Magic Link\n3. Cek email (termasuk Spam)\n4. Copy link dari email Alight Motion\n5. Lanjut ke langkah verifikasi"
+                        android:textColor="#CBD5E1"
+                        android:textSize="14sp"
+                        android:lineSpacingExtra="4dp" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Verify Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="STEP 2: VERIFIKASI AKUN"
+                android:textColor="#64748B"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#1E293B"
+                android:layout_marginBottom="24dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Raw Magic Link"
+                        app:boxBackgroundColor="#334155"
+                        app:boxStrokeColor="#F472B6"
+                        app:hintTextColor="#94A3B8">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etRawLink"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="textUri"
+                            android:textColor="#FFFFFF"
+                            android:minLines="3"
+                            android:hint="https://..." />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnVerify"
+                        android:layout_width="match_parent"
+                        android:layout_height="56dp"
+                        android:layout_marginTop="16dp"
+                        android:text="VERIFIKASI &amp; AKTIFKAN PREMIUM"
+                        android:textSize="14sp"
+                        android:textStyle="bold"
+                        app:cornerRadius="12dp"
+                        app:backgroundTint="#EC4899"
+                        app:icon="@android:drawable/ic_menu_agenda"
+                        app:iconGravity="textStart" />
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Result Section -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="HASIL"
+                android:textColor="#64748B"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp" />
+
+            <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp"
+                app:cardBackgroundColor="#1E293B">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="20dp">
+
+                    <ScrollView
+                        android:layout_width="match_parent"
+                        android:layout_height="200dp"
+                        android:background="#0F172A"
+                        android:padding="12dp">
+
+                        <TextView
+                            android:id="@+id/tvResult"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="monospace"
+                            android:text="Hasil akan muncul di sini..."
+                            android:textColor="#94A3B8"
+                            android:textSize="12sp" />
+                    </ScrollView>
+
+                    <!-- Action Buttons -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnCopyResult"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:layout_marginEnd="8dp"
+                            android:text="COPY JSON"
+                            android:textSize="13sp"
+                            app:cornerRadius="10dp"
+                            app:backgroundTint="#475569"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                        <com.google.android.material.button.MaterialButton
+                            android:id="@+id/btnClear"
+                            android:layout_width="0dp"
+                            android:layout_height="48dp"
+                            android:layout_weight="1"
+                            android:text="CLEAR"
+                            android:textSize="13sp"
+                            app:cornerRadius="10dp"
+                            app:backgroundTint="#475569"
+                            style="@style/Widget.MaterialComponents.Button.OutlinedButton" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
+
+            <!-- Footer -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:text="Base: am.rafaelxd.my.id  •  Duration: 1 Tahun"
+                android:textColor="#475569"
+                android:textSize="11sp" />
+
         </LinearLayout>
-
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -6,6 +6,7 @@ import android.content.Context
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.alightmotiongenerator.databinding.ActivityMainBinding
 import kotlinx.coroutines.launch
@@ -28,8 +29,8 @@ class MainActivity : AppCompatActivity() {
         // Send Magic Link
         binding.btnSendLink.setOnClickListener {
             val email = binding.etEmail.text.toString().trim()
-            if (email.isEmpty()) {
-                Toast.makeText(this, "Email wajib diisi!", Toast.LENGTH_SHORT).show()
+            if (email.isEmpty() || !email.contains("@")) {
+                showToast("Masukkan email yang valid!")
                 return@setOnClickListener
             }
             sendMagicLink(email)
@@ -40,12 +41,12 @@ class MainActivity : AppCompatActivity() {
             val email = binding.etEmail.text.toString().trim()
             val rawLink = binding.etRawLink.text.toString().trim()
 
-            if (email.isEmpty()) {
-                Toast.makeText(this, "Email wajib diisi!", Toast.LENGTH_SHORT).show()
+            if (email.isEmpty() || !email.contains("@")) {
+                showToast("Masukkan email yang valid!")
                 return@setOnClickListener
             }
-            if (rawLink.isEmpty()) {
-                Toast.makeText(this, "Raw Link wajib diisi!", Toast.LENGTH_SHORT).show()
+            if (rawLink.isEmpty() || !rawLink.startsWith("http")) {
+                showToast("Paste raw link yang valid!")
                 return@setOnClickListener
             }
             verifyAccount(email, rawLink)
@@ -55,9 +56,9 @@ class MainActivity : AppCompatActivity() {
         binding.btnCopyResult.setOnClickListener {
             if (lastResultJson.isNotEmpty()) {
                 copyToClipboard(lastResultJson)
-                Toast.makeText(this, "Hasil disalin ke clipboard!", Toast.LENGTH_SHORT).show()
+                showToast("✅ Hasil berhasil disalin!")
             } else {
-                Toast.makeText(this, "Tidak ada hasil untuk disalin", Toast.LENGTH_SHORT).show()
+                showToast("Tidak ada hasil untuk disalin")
             }
         }
 
@@ -67,11 +68,12 @@ class MainActivity : AppCompatActivity() {
             binding.etRawLink.text?.clear()
             binding.tvResult.text = "Hasil akan muncul di sini..."
             lastResultJson = ""
+            showToast("Form dikosongkan")
         }
     }
 
     private fun sendMagicLink(email: String) {
-        showLoading(true)
+        setLoading(true, "send")
         lifecycleScope.launch {
             try {
                 val response = RetrofitClient.apiService.sendMagicLink(SendRequest(email))
@@ -87,25 +89,24 @@ class MainActivity : AppCompatActivity() {
                             "Buka inbox email (cek folder Spam juga)",
                             "Cari email dari \"Alight Motion\" / \"Alight Creative\"",
                             "Tekan-tahan tombol \"Login ke Alight Creative\", pilih \"Salin URL\"",
-                            "Jangan klik langsung — copy link doang",
                             "Paste link di kolom Raw Link lalu tekan Verifikasi"
                         ))
                     }
                     updateResult(result.toString(2))
-                    Toast.makeText(this@MainActivity, "Magic link berhasil dikirim!", Toast.LENGTH_LONG).show()
+                    showToast("✅ Magic link berhasil dikirim!")
                 } else {
                     handleError(response.errorBody()?.string() ?: "Gagal mengirim link")
                 }
             } catch (e: Exception) {
-                handleError(e.message ?: "Terjadi kesalahan")
+                handleError(e.message ?: "Terjadi kesalahan jaringan")
             } finally {
-                showLoading(false)
+                setLoading(false, "send")
             }
         }
     }
 
     private fun verifyAccount(email: String, rawLink: String) {
-        showLoading(true)
+        setLoading(true, "verify")
         lifecycleScope.launch {
             try {
                 val response = RetrofitClient.apiService.verifyAccount(VerifyRequest(email, rawLink))
@@ -123,14 +124,14 @@ class MainActivity : AppCompatActivity() {
                         put("duration", "1 Tahun")
                     }
                     updateResult(result.toString(2))
-                    Toast.makeText(this@MainActivity, "Akun berhasil diverifikasi!", Toast.LENGTH_LONG).show()
+                    showToast("🎉 Akun Premium berhasil diaktifkan!")
                 } else {
                     handleError(response.errorBody()?.string() ?: "Gagal verifikasi")
                 }
             } catch (e: Exception) {
-                handleError(e.message ?: "Terjadi kesalahan")
+                handleError(e.message ?: "Terjadi kesalahan jaringan")
             } finally {
-                showLoading(false)
+                setLoading(false, "verify")
             }
         }
     }
@@ -141,7 +142,7 @@ class MainActivity : AppCompatActivity() {
             put("error", errorMessage)
         }
         updateResult(result.toString(2))
-        Toast.makeText(this, "Error: $errorMessage", Toast.LENGTH_LONG).show()
+        showToast("❌ Error: $errorMessage")
     }
 
     private fun updateResult(json: String) {
@@ -155,18 +156,17 @@ class MainActivity : AppCompatActivity() {
         clipboard.setPrimaryClip(clip)
     }
 
-    private fun showLoading(isLoading: Boolean) {
-        binding.btnSendLink.isEnabled = !isLoading
-        binding.btnVerify.isEnabled = !isLoading
-        binding.btnCopyResult.isEnabled = !isLoading
-        binding.btnClear.isEnabled = !isLoading
-
-        if (isLoading) {
-            binding.btnSendLink.text = "Mengirim..."
-            binding.btnVerify.text = "Memverifikasi..."
+    private fun setLoading(isLoading: Boolean, type: String) {
+        if (type == "send") {
+            binding.btnSendLink.isEnabled = !isLoading
+            binding.btnSendLink.text = if (isLoading) "MENGIRIM..." else "KIRIM MAGIC LINK"
         } else {
-            binding.btnSendLink.text = getString(R.string.send_magic_link)
-            binding.btnVerify.text = getString(R.string.verify_account)
+            binding.btnVerify.isEnabled = !isLoading
+            binding.btnVerify.text = if (isLoading) "MEMVERIFIKASI..." else "VERIFIKASI & AKTIFKAN PREMIUM"
         }
+    }
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 }
