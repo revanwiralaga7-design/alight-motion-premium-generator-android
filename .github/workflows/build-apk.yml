@@ -19,42 +19,40 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Download Gradle Wrapper JAR
+        run: |
+          mkdir -p gradle/wrapper
+          curl -sL https://raw.githubusercontent.com/gradle/gradle/v8.7.0/gradle/wrapper/gradle-wrapper.jar -o gradle/wrapper/gradle-wrapper.jar
+
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.7
           cache-read-only: false
 
-      - name: Debug - Check files
+      - name: Debug Info
         run: |
-          echo "=== Checking project structure ==="
+          echo "=== Project Structure ==="
           ls -la
           echo ""
-          echo "=== Checking gradle wrapper ==="
+          echo "=== Gradle Wrapper ==="
           ls -la gradle/wrapper/
           echo ""
-          echo "=== Checking gradlew ==="
-          ls -la gradlew
-          file gradlew || true
-          head -5 gradlew || true
-
-      - name: Make gradlew executable
-        run: chmod +x gradlew
+          echo "=== Gradle Version ==="
+          ./gradlew --version || echo "Gradle wrapper failed"
 
       - name: Build Debug APK
-        run: |
-          echo "=== Starting Gradle Build ==="
-          ./gradlew --version
-          ./gradlew clean assembleDebug --stacktrace --info 2>&1 | tail -100
+        run: ./gradlew assembleDebug --stacktrace
 
       - name: Upload Debug APK
         uses: actions/upload-artifact@v4
         if: always()
         with:
           name: AlightMotionGenerator-debug
-          path: |
-            app/build/outputs/apk/debug/app-debug.apk
-            app/build/outputs/apk/debug/*.apk
+          path: app/build/outputs/apk/debug/*.apk
 
       - name: Create Release
         if: github.ref == 'refs/heads/main' && success()
@@ -64,21 +62,10 @@ jobs:
           name: Alight Motion Premium Generator v1.0
           body: |
             ## Alight Motion Premium Generator - Android App
-            
             ### Fitur
-            - ✅ Kirim Magic Link
-            - ✅ Verifikasi Akun
-            - ✅ Hasil JSON lengkap (oobCode, idToken, dll)
-            - ✅ Modern Dark UI (Material 3)
-            
-            ### Cara Install
-            1. Download `app-debug.apk`
-            2. Aktifkan "Install from unknown sources"
-            3. Install APK
-            
-            Base URL: https://am.rafaelxd.my.id
+            - Kirim Magic Link
+            - Verifikasi Akun
+            - Modern Dark UI
           files: app/build/outputs/apk/debug/app-debug.apk
-          draft: false
-          prerelease: false
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
