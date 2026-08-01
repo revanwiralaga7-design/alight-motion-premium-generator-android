@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Alight Motion Premium Generator</string>
+    <string name="email_hint">Masukkan email Anda</string>
+    <string name="send_magic_link">Kirim Magic Link</string>
+    <string name="paste_raw_link">Paste Raw Link Magic Link</string>
+    <string name="verify_account">Verifikasi Akun</string>
+    <string name="result">Hasil</string>
+    <string name="instructions">Instruksi:\n1. Masukkan email\n2. Tekan "Kirim Magic Link"\n3. Cek email Anda (termasuk spam)\n4. Copy link dari email "Alight Motion"\n5. Paste link di bawah dan tekan "Verifikasi"</string>
+</resources>
