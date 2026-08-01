@@ -19,30 +19,22 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Download Gradle Wrapper JAR
-        run: |
-          mkdir -p gradle/wrapper
-          curl -sL https://raw.githubusercontent.com/gradle/gradle/v8.7.0/gradle/wrapper/gradle-wrapper.jar -o gradle/wrapper/gradle-wrapper.jar
-
-      - name: Make gradlew executable
-        run: chmod +x gradlew
-
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.7
           cache-read-only: false
 
-      - name: Debug Info
+      - name: Make gradlew executable
+        run: chmod +x gradlew
+
+      - name: Verify Gradle Wrapper
         run: |
-          echo "=== Project Structure ==="
-          ls -la
-          echo ""
-          echo "=== Gradle Wrapper ==="
+          echo "=== Checking Gradle Wrapper ==="
           ls -la gradle/wrapper/
           echo ""
-          echo "=== Gradle Version ==="
-          ./gradlew --version || echo "Gradle wrapper failed"
+          echo "=== Testing gradlew ==="
+          ./gradlew --version
 
       - name: Build Debug APK
         run: ./gradlew assembleDebug --stacktrace
@@ -62,7 +54,6 @@ jobs:
           name: Alight Motion Premium Generator v1.0
           body: |
             ## Alight Motion Premium Generator - Android App
-            ### Fitur
             - Kirim Magic Link
             - Verifikasi Akun
             - Modern Dark UI
